@@ -122,6 +122,7 @@
     const profileView = document.querySelector('.profile-view');
     const profileEdit = $('profile-edit');
     const btnEdit = $('btn-edit-profile');
+    const btnUploadAvatar = $('btn-upload-avatar');
     const btnCancel = $('btn-cancel-profile');
     const btnSave = $('btn-save-profile');
     const inputName = $('input-name');
@@ -136,6 +137,7 @@
       !profileAvatar ||
       !profileAvatarEdit ||
       !btnEdit ||
+      !btnUploadAvatar ||
       !btnCancel ||
       !btnSave ||
       !inputName ||
@@ -145,6 +147,19 @@
       !profileView ||
       !profileEdit
     ) return;
+
+    function mergeProfile(partial) {
+      var existing = {};
+      try {
+        var raw = localStorage.getItem(PROFILE_KEY);
+        if (raw) existing = JSON.parse(raw) || {};
+      } catch (e) {
+        existing = {};
+      }
+      var next = Object.assign({}, existing, partial);
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(next));
+      return next;
+    }
 
     function loadProfile() {
       try {
@@ -215,14 +230,27 @@
     btnCancel.addEventListener('click', closeEdit);
     btnSave.addEventListener('click', saveProfile);
 
+    btnUploadAvatar.addEventListener('click', function () {
+      avatarInput.click();
+    });
+
     avatarInput.addEventListener('change', function () {
       var file = this.files && this.files[0];
       if (!file || !file.type.startsWith('image/')) return;
       var reader = new FileReader();
       reader.onload = function (e) {
-        profileAvatarEdit.src = e.target.result;
-        profileAvatar.src = e.target.result;
-        profileAvatar.alt = inputName.value || 'Profile photo';
+        var dataUrl = e.target.result;
+        profileAvatarEdit.src = dataUrl;
+        profileAvatar.src = dataUrl;
+        profileAvatar.alt = inputName.value || profileName.textContent || 'Profile photo';
+
+        // Save avatar immediately (so it persists even if you don’t click “Save”)
+        mergeProfile({
+          name: (profileName.textContent || '').trim(),
+          tagline: (profileTagline.textContent || '').trim(),
+          bio: (profileBio.textContent || '').trim(),
+          avatar: dataUrl
+        });
       };
       reader.readAsDataURL(file);
       this.value = '';
