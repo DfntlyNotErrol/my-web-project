@@ -40,7 +40,38 @@ body {
   margin: 0 auto;
   padding: 1rem 1.5rem;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 1.5rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-logout {
+  padding: 0.45rem 0.9rem;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: border-color var(--ease), color var(--ease), transform var(--ease), background var(--ease);
+}
+
+.nav-logout:hover,
+.nav-logout:focus-visible {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  outline: none;
+}
+
+.nav-logout:active {
+  transform: scale(0.98);
 }
 
 .nav a {
@@ -333,6 +364,73 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: border-color var(--ease), transform var(--ease);
+}
+
+.stat-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.35rem;
+  font-weight: 650;
+  letter-spacing: 0.2px;
+}
+
+.type-picker {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.chip {
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: border-color var(--ease), color var(--ease), background var(--ease), transform var(--ease);
+}
+
+.chip:hover,
+.chip:focus-visible {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  outline: none;
+}
+
+.chip.active {
+  border-color: rgba(108, 92, 231, 0.55);
+  background: rgba(108, 92, 231, 0.18);
+  color: var(--text);
+}
+
+.chip:active {
+  transform: scale(0.98);
+}
+
 .attach-area {
   margin-bottom: 2rem;
 }
@@ -401,6 +499,122 @@ body {
   color: var(--muted);
 }
 
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-right: 0.5rem;
+}
+
+.badge.quiz {
+  border-color: rgba(108, 92, 231, 0.55);
+  color: rgba(232, 232, 237, 0.9);
+}
+
+.badge.activity {
+  border-color: rgba(255, 255, 255, 0.18);
+  color: rgba(232, 232, 237, 0.9);
+}
+
+.gallery-actions {
+  float: right;
+}
+
+.btn-icon {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--muted);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color var(--ease), color var(--ease), background var(--ease), transform var(--ease);
+}
+
+.btn-icon:hover,
+.btn-icon:focus-visible {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  outline: none;
+}
+
+.btn-icon:active {
+  transform: scale(0.98);
+}
+
+/* Login page */
+.login-page {
+  min-height: 100vh;
+}
+
+.login-wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1.5rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 460px;
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 2rem;
+}
+
+.login-brand {
+  color: var(--muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.2px;
+  margin-bottom: 0.75rem;
+}
+
+.login-title {
+  font-size: 1.6rem;
+  margin-bottom: 0.35rem;
+}
+
+.login-subtitle {
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+
+.login-form {
+  margin-bottom: 0.75rem;
+}
+
+.login-btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+}
+
+.login-message {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  min-height: 1.2em;
+}
+
+.login-reset {
+  width: 100%;
+}
+
+.login-note {
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
 .gallery-empty {
   color: var(--muted);
   font-style: italic;
@@ -427,6 +641,10 @@ body {
 @media (max-width: 600px) {
   .hero h1 {
     font-size: 1.75rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
   }
 
   .profile-card {

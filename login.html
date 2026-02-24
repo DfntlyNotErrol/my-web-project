@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login • My Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page">
+  <main class="login-wrap">
+    <section class="login-card section-reveal visible" aria-label="Login">
+      <div class="login-brand">My Portfolio</div>
+      <h1 class="login-title" id="login-title">Login</h1>
+      <p class="login-subtitle" id="login-subtitle">Enter your passcode to continue.</p>
+
+      <form id="login-form" class="login-form" autocomplete="off">
+        <label class="edit-label" for="login-passcode">Passcode</label>
+        <input id="login-passcode" class="edit-input" type="password" inputmode="numeric" placeholder="Enter passcode" required>
+        <button class="btn-save login-btn" type="submit" id="login-submit">Continue</button>
+        <p class="login-message" id="login-message" role="status" aria-live="polite"></p>
+      </form>
+
+      <button type="button" class="btn-cancel login-reset" id="login-reset">Reset passcode</button>
+      <p class="login-note">This is a simple client-side login (no server). It’s good for class requirements, not for real security.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
