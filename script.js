@@ -253,24 +253,55 @@
 
     const gallery = $('gallery');
     const fileInput = $('file-input');
-    if (!gallery || !fileInput) return;
+    const attachTrigger = $('attach-trigger');
+    const typeModal = $('type-modal');
+    const modalBackdrop = $('type-modal-backdrop');
+    const modalQuiz = $('modal-quiz');
+    const modalActivity = $('modal-activity');
+    const modalCancel = $('modal-cancel');
+    if (
+      !gallery ||
+      !fileInput ||
+      !attachTrigger ||
+      !typeModal ||
+      !modalBackdrop ||
+      !modalQuiz ||
+      !modalActivity ||
+      !modalCancel
+    ) return;
 
     const statTotal = $('stat-total');
     const statQuizzes = $('stat-quizzes');
     const statActivities = $('stat-activities');
 
-    var selectedType = 'quiz';
-    var typePicker = document.querySelector('.type-picker');
-    if (typePicker) {
-      typePicker.addEventListener('click', function (e) {
-        var btn = e.target && e.target.closest && e.target.closest('button[data-type]');
-        if (!btn) return;
-        selectedType = btn.getAttribute('data-type') || 'quiz';
-        Array.from(typePicker.querySelectorAll('.chip')).forEach(function (chip) {
-          chip.classList.toggle('active', chip === btn);
-        });
-      });
+    var pendingType = null;
+
+    function openTypeModal() {
+      pendingType = null;
+      typeModal.classList.remove('hidden');
+      typeModal.setAttribute('aria-hidden', 'false');
+      modalQuiz.focus();
     }
+
+    function closeTypeModal() {
+      typeModal.classList.add('hidden');
+      typeModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function chooseType(type) {
+      pendingType = type === 'activity' ? 'activity' : 'quiz';
+      closeTypeModal();
+      fileInput.click();
+    }
+
+    attachTrigger.addEventListener('click', openTypeModal);
+    modalBackdrop.addEventListener('click', closeTypeModal);
+    modalCancel.addEventListener('click', closeTypeModal);
+    modalQuiz.addEventListener('click', function () { chooseType('quiz'); });
+    modalActivity.addEventListener('click', function () { chooseType('activity'); });
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !typeModal.classList.contains('hidden')) closeTypeModal();
+    });
 
     function loadAttachmentsV2() {
       try {
@@ -395,14 +426,16 @@
     fileInput.addEventListener('change', function () {
       var files = this.files;
       if (!files || !files.length) return;
+      var chosen = pendingType || 'quiz';
       Array.from(files).forEach(function (file) {
         if (!file.type.startsWith('image/')) return;
         var reader = new FileReader();
         reader.onload = function (e) {
-          addAttachmentFromDataUrl(e.target.result, selectedType);
+          addAttachmentFromDataUrl(e.target.result, chosen);
         };
         reader.readAsDataURL(file);
       });
+      pendingType = null;
       this.value = '';
     });
   }

@@ -431,6 +431,61 @@ body {
   transform: scale(0.98);
 }
 
+/* Upload type modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+  transform: translateY(0);
+  transition: transform 0.18s ease, border-color var(--ease);
+}
+
+.modal-dialog:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.modal-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.35rem;
+}
+
+.modal-subtitle {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.modal-cancel {
+  width: 100%;
+}
+
 .attach-area {
   margin-bottom: 2rem;
 }
