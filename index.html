@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <a href="#home">Home</a>
+      <a href="#profile">Profile</a>
+      <a href="#work">Quizzes & Activities</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero section-reveal visible">
+      <h1>My Portfolio</h1>
+      <p class="hero-tagline">Welcome</p>
+    </section>
+
+    <section id="profile" class="profile-section section-reveal">
+      <div class="profile-card">
+        <div class="profile-view">
+          <div class="profile-avatar-wrap">
+            <img id="profile-avatar" class="profile-avatar" src="" alt="">
+            <span class="profile-avatar-placeholder" id="avatar-placeholder">?</span>
+          </div>
+          <h2 id="profile-name" class="profile-name">Your Name</h2>
+          <p id="profile-tagline" class="profile-tagline">Short tagline</p>
+          <p id="profile-bio" class="profile-bio">A few lines about you. Click Edit profile to change this.</p>
+          <button type="button" class="btn-edit" id="btn-edit-profile" aria-label="Edit profile">Edit profile</button>
+        </div>
+        <div class="profile-edit hidden" id="profile-edit">
+          <div class="profile-avatar-wrap">
+            <img id="profile-avatar-edit" class="profile-avatar" src="" alt="">
+            <span class="profile-avatar-placeholder" id="avatar-placeholder-edit">?</span>
+            <label class="avatar-upload" for="avatar-input">Change photo</label>
+            <input type="file" id="avatar-input" accept="image/*" hidden>
+          </div>
+          <label class="edit-label">Name</label>
+          <input type="text" id="input-name" class="edit-input" placeholder="Your name" maxlength="80">
+          <label class="edit-label">Tagline</label>
+          <input type="text" id="input-tagline" class="edit-input" placeholder="Short tagline" maxlength="120">
+          <label class="edit-label">Bio</label>
+          <textarea id="input-bio" class="edit-textarea" placeholder="A few lines about you" rows="4"></textarea>
+          <div class="edit-actions">
+            <button type="button" class="btn-cancel" id="btn-cancel-profile">Cancel</button>
+            <button type="button" class="btn-save" id="btn-save-profile">Save</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="work section-reveal">
+      <h2>Quizzes & Activities</h2>
+      <p class="work-intro">Attach pictures of your quizzes and activities. They will appear below.</p>
+
+      <div class="attach-area">
+        <label for="file-input" class="attach-btn">
+          <span class="attach-icon">+</span>
+          Attach a picture
+        </label>
+        <input type="file" id="file-input" accept="image/*" multiple hidden>
+      </div>
+
+      <div id="gallery" class="gallery"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Portfolio — Deployed on Vercel</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
