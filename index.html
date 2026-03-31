@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Portfolio</title>
+  <title>Errol Yu | Portfolio</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -28,46 +28,24 @@
       <div class="profile-card">
         <div class="profile-view">
           <div class="profile-avatar-wrap">
-            <img id="profile-avatar" class="profile-avatar" src="uploads/Image.1.jpg" alt="Profile Normal">
-            
-            <img class="profile-avatar avatar-hover" src="uploads/Image.2.jpg" alt="Profile Hover">
-            
-            <span class="profile-avatar-placeholder" id="avatar-placeholder">?</span>
+            <img id="profile-avatar" class="profile-avatar" src="uploads/Image.1.jpg" alt="Errol Yu">
+            <img class="profile-avatar avatar-hover" src="uploads/Image.2.jpg" alt="Errol Yu Hover">
           </div>
           
-          <h2 id="profile-name" class="profile-name">Your Name</h2>
-          <p id="profile-tagline" class="profile-tagline">Short tagline</p>
-          <p id="profile-bio" class="profile-bio">A few lines about you. Click Edit profile to change this.</p>
-          <div class="profile-actions">
-            <button type="button" class="btn-edit btn-avatar" id="btn-upload-avatar" aria-label="Upload profile photo">Upload photo</button>
-            <button type="button" class="btn-edit" id="btn-edit-profile" aria-label="Edit profile">Edit profile</button>
-          </div>
-        </div>
+          <h2 id="profile-name" class="profile-name">Errol Yu</h2>
+          <p id="profile-tagline" class="profile-tagline">DfnltyNotKatsu</p>
+          <p id="profile-bio" class="profile-bio">
+            I am a BSIT Student from Quezon City University, 
+            and this is my website for compiling activities and quizzes.
+          </p>
 
-        <div class="profile-edit hidden" id="profile-edit">
-          <div class="profile-avatar-wrap">
-            <img id="profile-avatar-edit" class="profile-avatar" src="uploads/Image.1.jpg" alt="">
-            <span class="profile-avatar-placeholder" id="avatar-placeholder-edit">?</span>
-            <label class="avatar-upload" for="avatar-input">Change photo</label>
-            <input type="file" id="avatar-input" accept="image/*" hidden>
           </div>
-          <label class="edit-label">Name</label>
-          <input type="text" id="input-name" class="edit-input" placeholder="Your name" maxlength="80">
-          <label class="edit-label">Tagline</label>
-          <input type="text" id="input-tagline" class="edit-input" placeholder="Short tagline" maxlength="120">
-          <label class="edit-label">Bio</label>
-          <textarea id="input-bio" class="edit-textarea" placeholder="A few lines about you" rows="4"></textarea>
-          <div class="edit-actions">
-            <button type="button" class="btn-cancel" id="btn-cancel-profile">Cancel</button>
-            <button type="button" class="btn-save" id="btn-save-profile">Save</button>
-          </div>
-        </div>
       </div>
     </section>
 
     <section id="work" class="work section-reveal">
       <h2>Quizzes & Activities</h2>
-      <p class="work-intro">Attach pictures of your quizzes and activities. They will appear below.</p>
+      <p class="work-intro">Your compiled coursework appears below.</p>
 
       <div class="stats" aria-label="Statistics">
         <div class="stat-card">
@@ -84,25 +62,8 @@
         </div>
       </div>
 
-      <div class="attach-area">
-        <button type="button" class="attach-btn" id="attach-trigger">
-          <span class="attach-icon">+</span>
-          Attach a picture
-        </button>
+      <div class="attach-area hidden">
         <input type="file" id="file-input" accept="image/*" multiple hidden>
-      </div>
-
-      <div class="modal hidden" id="type-modal" aria-hidden="true">
-        <div class="modal-backdrop" id="type-modal-backdrop"></div>
-        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="type-modal-title">
-          <h3 class="modal-title" id="type-modal-title">What are you uploading?</h3>
-          <p class="modal-subtitle">Choose a type so it counts in your statistics.</p>
-          <div class="modal-actions">
-            <button type="button" class="chip active" id="modal-quiz">Quiz</button>
-            <button type="button" class="chip" id="modal-activity">Activity</button>
-          </div>
-          <button type="button" class="btn-cancel modal-cancel" id="modal-cancel">Cancel</button>
-        </div>
       </div>
 
       <div id="gallery" class="gallery"></div>

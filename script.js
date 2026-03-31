@@ -5,15 +5,15 @@
   const PORTFOLIO_DATA = [
     {
       id: 'q1',
-      src: 'uploads/quiz1.jpg.jpg', // Added the extra .jpg to match GitHub
+      src: 'uploads/quiz1.jpg.jpg', // Matches your GitHub filename
       type: 'quiz',
       label: 'Networking Quiz 1',
       date: '2026-03-24'
     }
-  ];  // Copy the block above and paste here to add more images!
+    // To add more, copy the block above and paste it here!
+  ];
 
   // Keys & Constants
-  const PROFILE_KEY = 'portfolio-profile';
   const PASS_KEY = 'portfolio-passhash';
   const SESSION_KEY = 'portfolio-auth-session';
   const ATTACHMENTS_V2_KEY = 'portfolio-attachments-v2';
@@ -32,7 +32,7 @@
     } catch (e) { return null; }
   }
 
-  // --- Animation ---
+  // --- Animation (Scroll Reveal) ---
   function initSectionReveal() {
     var sections = document.querySelectorAll('.section-reveal');
     if (typeof IntersectionObserver !== 'undefined') {
@@ -96,47 +96,7 @@
     if (isAuthed()) goto('index.html');
   }
 
-  // --- Profile Logic ---
-  function initProfile() {
-    const profileName = $('profile-name');
-    const profileTagline = $('profile-tagline');
-    const profileBio = $('profile-bio');
-    const profileAvatar = $('profile-avatar');
-    const btnSave = $('btn-save-profile');
-    const inputName = $('input-name');
-    const inputTagline = $('input-tagline');
-    const inputBio = $('input-bio');
-
-    function loadProfile() {
-      try {
-        var data = JSON.parse(localStorage.getItem(PROFILE_KEY));
-        if (data) {
-          if (data.name) profileName.textContent = data.name;
-          if (data.tagline) profileTagline.textContent = data.tagline;
-          if (data.bio) profileBio.textContent = data.bio;
-          if (data.avatar) profileAvatar.src = data.avatar;
-        }
-      } catch (e) {}
-    }
-
-    if (btnSave) {
-        btnSave.addEventListener('click', function() {
-            const data = {
-                name: inputName.value,
-                tagline: inputTagline.value,
-                bio: inputBio.value,
-                avatar: profileAvatar.src
-            };
-            localStorage.setItem(PROFILE_KEY, JSON.stringify(data));
-            loadProfile();
-            $('profile-view').classList.remove('hidden');
-            $('profile-edit').classList.add('hidden');
-        });
-    }
-    loadProfile();
-  }
-
-  // --- Gallery Logic (Option B) ---
+  // --- Portfolio & Gallery Logic ---
   function initPortfolio() {
     const logoutBtn = $('btn-logout');
     if (logoutBtn) {
@@ -146,8 +106,6 @@
         goto('login.html');
       });
     }
-
-    initProfile();
 
     const gallery = $('gallery');
     const statTotal = $('stat-total');
@@ -159,7 +117,7 @@
     function renderGallery() {
       gallery.innerHTML = '';
       
-      // Combine Static Data + any dynamic uploads (if you still want both)
+      // Combine Static Data + any temporary dynamic uploads
       const dynamicItems = JSON.parse(localStorage.getItem(ATTACHMENTS_V2_KEY) || '[]');
       const allItems = [...PORTFOLIO_DATA, ...dynamicItems];
 
@@ -173,14 +131,14 @@
         fig.className = 'gallery-item section-reveal';
 
         const img = document.createElement('img');
-        img.src = it.src || it.dataUrl; // Support both static 'src' and dynamic 'dataUrl'
-        img.alt = it.label || 'Attached Item';
+        img.src = it.src || it.dataUrl;
+        img.alt = it.label || 'Portfolio Item';
         img.loading = "lazy";
 
         const cap = document.createElement('figcaption');
         cap.innerHTML = `
             <span class="badge ${it.type}">${it.type.charAt(0).toUpperCase() + it.type.slice(1)}</span>
-            ${it.label || 'New Activity'}
+            ${it.label || 'New Entry'}
         `;
 
         fig.appendChild(img);
@@ -188,18 +146,18 @@
         gallery.appendChild(fig);
       });
 
-      // Update Stats
+      // Update the Statistics Counters
       if (statTotal) statTotal.textContent = allItems.length;
       if (statQuizzes) statQuizzes.textContent = allItems.filter(i => i.type === 'quiz').length;
       if (statActivities) statActivities.textContent = allItems.filter(i => i.type === 'activity').length;
       
-      initSectionReveal(); // Re-trigger animations for new items
+      initSectionReveal();
     }
 
     renderGallery();
   }
 
-  // Entry Point
+  // --- Entry Point ---
   initSectionReveal();
   if ($('login-form')) {
     initLoginPage();
