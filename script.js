@@ -1,7 +1,20 @@
 (function () {
-  // ==========================================
-  // 1. STATIC DATA: Add your local images here
-  // ==========================================
+  // 1. Dynamic Greeting Logic
+  function updateGreeting() {
+    const greetingEl = document.getElementById('hero-greeting');
+    if (!greetingEl) return;
+
+    const hour = new Date().getHours();
+    let message = "Welcome";
+
+    if (hour < 12) message = "Good Morning";
+    else if (hour < 18) message = "Good Afternoon";
+    else message = "Good Evening";
+
+    greetingEl.textContent = `${message}, welcome to my portfolio.`;
+  }
+
+  // 2. STATIC DATA: Gallery Items
   const PORTFOLIO_DATA = [
     {
       id: 'q1',
@@ -10,7 +23,6 @@
       label: 'Networking Quiz 1',
       date: '2026-03-24'
     }
-    // To add more, copy the block above and paste it here!
   ];
 
   // Keys & Constants
@@ -22,7 +34,7 @@
   function isAuthed() { return sessionStorage.getItem(SESSION_KEY) === '1'; }
   function goto(path) { window.location.href = path; }
 
-  // --- Auth & Security ---
+  // Auth Security
   async function sha256Hex(text) {
     try {
       if (!window.crypto || !crypto.subtle) return null;
@@ -32,7 +44,7 @@
     } catch (e) { return null; }
   }
 
-  // --- Animation (Scroll Reveal) ---
+  // Animation logic
   function initSectionReveal() {
     var sections = document.querySelectorAll('.section-reveal');
     if (typeof IntersectionObserver !== 'undefined') {
@@ -47,33 +59,13 @@
     }
   }
 
-  // --- Login Page Logic ---
+  // Login Logic
   async function initLoginPage() {
     const form = $('login-form');
     if (!form) return;
     const passInput = $('login-passcode');
     const msg = $('login-message');
-    const title = $('login-title');
-    const subtitle = $('login-subtitle');
-    const submit = $('login-submit');
-    const reset = $('login-reset');
-
-    function updateMode() {
-      const existing = localStorage.getItem(PASS_KEY);
-      const first = !existing;
-      title.textContent = first ? 'Set a passcode' : 'Login';
-      subtitle.textContent = first ? 'Create a passcode (remember it).' : 'Enter your passcode to continue.';
-      submit.textContent = first ? 'Save & continue' : 'Continue';
-    }
-
-    reset.addEventListener('click', function () {
-      if (!confirm('Reset passcode?')) return;
-      localStorage.removeItem(PASS_KEY);
-      sessionStorage.removeItem(SESSION_KEY);
-      updateMode();
-      msg.textContent = 'Passcode reset.';
-    });
-
+    
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
       const pass = (passInput.value || '').trim();
@@ -92,11 +84,10 @@
         msg.textContent = 'Wrong passcode.';
       }
     });
-    updateMode();
     if (isAuthed()) goto('index.html');
   }
 
-  // --- Portfolio & Gallery Logic ---
+  // Gallery Logic
   function initPortfolio() {
     const logoutBtn = $('btn-logout');
     if (logoutBtn) {
@@ -116,49 +107,40 @@
 
     function renderGallery() {
       gallery.innerHTML = '';
-      
-      // Combine Static Data + any temporary dynamic uploads
       const dynamicItems = JSON.parse(localStorage.getItem(ATTACHMENTS_V2_KEY) || '[]');
       const allItems = [...PORTFOLIO_DATA, ...dynamicItems];
 
       if (!allItems.length) {
-        gallery.innerHTML = '<p class="gallery-empty">No pictures found in uploads folder.</p>';
+        gallery.innerHTML = '<p class="gallery-empty">No pictures found.</p>';
         return;
       }
 
       allItems.forEach(function (it) {
         const fig = document.createElement('figure');
         fig.className = 'gallery-item section-reveal';
-
         const img = document.createElement('img');
         img.src = it.src || it.dataUrl;
-        img.alt = it.label || 'Portfolio Item';
+        img.alt = it.label;
         img.loading = "lazy";
-
         const cap = document.createElement('figcaption');
-        cap.innerHTML = `
-            <span class="badge ${it.type}">${it.type.charAt(0).toUpperCase() + it.type.slice(1)}</span>
-            ${it.label || 'New Entry'}
-        `;
-
+        cap.innerHTML = `<span class="badge ${it.type}">${it.type.toUpperCase()}</span> ${it.label}`;
         fig.appendChild(img);
         fig.appendChild(cap);
         gallery.appendChild(fig);
       });
 
-      // Update the Statistics Counters
       if (statTotal) statTotal.textContent = allItems.length;
       if (statQuizzes) statQuizzes.textContent = allItems.filter(i => i.type === 'quiz').length;
       if (statActivities) statActivities.textContent = allItems.filter(i => i.type === 'activity').length;
-      
       initSectionReveal();
     }
-
     renderGallery();
   }
 
-  // --- Entry Point ---
+  // --- Start the App ---
   initSectionReveal();
+  updateGreeting();
+
   if ($('login-form')) {
     initLoginPage();
   } else {
