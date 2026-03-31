@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "msedge",
+            "request": "launch",
+            "name": "Debug Live Vercel Site",
+            "url": "https://my-web-project-plum.vercel.app",
+            "webRoot": "${workspaceFolder}"
+        }
+    ]
+}
