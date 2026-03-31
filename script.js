@@ -5,13 +5,12 @@
   const PORTFOLIO_DATA = [
     {
       id: 'q1',
-      src: 'uploads/quiz1.jpg.jpg', // Added the extra .jpg here
-      type: 'quiz',             // 'quiz' or 'activity'
+      src: 'uploads/quiz1.jpg.jpg', // Added the extra .jpg to match GitHub
+      type: 'quiz',
       label: 'Networking Quiz 1',
-      date: '2026-03-24'        // Manual date for static items
-    },
-    // Copy the block above and paste here to add more images!
-  ];
+      date: '2026-03-24'
+    }
+  ];  // Copy the block above and paste here to add more images!
 
   // Keys & Constants
   const PROFILE_KEY = 'portfolio-profile';

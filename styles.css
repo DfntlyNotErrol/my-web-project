@@ -126,7 +126,9 @@ body {
   font-size: 1.1rem;
 }
 
-/* Profile */
+/* ==========================================
+   PROFILE (Updated for Hover Transition)
+   ========================================== */
 .profile-section {
   max-width: 560px;
   margin: 0 auto;
@@ -157,18 +159,39 @@ body {
   border-radius: 50%;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
 }
 
-.profile-avatar,
-.profile-avatar-placeholder {
+.profile-avatar {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease;
+  z-index: 1;
+}
+
+/* The second image (hidden by default) */
+.avatar-hover {
+  opacity: 0;
+  z-index: 2;
+  transform: scale(1.1); /* Subtle zoom effect for the second image */
+}
+
+/* Hover logic: Fade Image 1 out, Fade Image 2 in */
+.profile-avatar-wrap:hover .avatar-hover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.profile-avatar-wrap:hover #profile-avatar {
+  opacity: 0;
 }
 
 .profile-avatar-placeholder {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -184,6 +207,10 @@ body {
 .profile-avatar-wrap:has(img[src]) .profile-avatar-placeholder {
   display: none;
 }
+
+/* ==========================================
+   REST OF CSS (Unchanged)
+   ========================================== */
 
 .profile-name {
   font-size: 1.5rem;
@@ -247,7 +274,6 @@ body {
   transform: scale(0.98);
 }
 
-/* Profile edit form */
 .profile-edit {
   text-align: left;
 }
@@ -354,7 +380,6 @@ body {
   display: none !important;
 }
 
-/* Section reveal */
 .section-reveal {
   opacity: 0;
   transform: translateY(12px);
@@ -450,7 +475,6 @@ body {
   transform: scale(0.98);
 }
 
-/* Upload type modal */
 .modal {
   position: fixed;
   inset: 0;
@@ -622,7 +646,6 @@ body {
   transform: scale(0.98);
 }
 
-/* Login page */
 .login-page {
   min-height: 100vh;
 }
