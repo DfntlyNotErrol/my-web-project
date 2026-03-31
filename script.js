@@ -5,7 +5,7 @@
   const PORTFOLIO_DATA = [
     {
       id: 'q1',
-      src: 'uploads/quiz1.jpg', // Path to your file
+      src: 'uploads/quiz1.jpg.jpg', // Added the extra .jpg here
       type: 'quiz',             // 'quiz' or 'activity'
       label: 'Networking Quiz 1',
       date: '2026-03-24'        // Manual date for static items
