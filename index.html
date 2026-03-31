@@ -28,9 +28,13 @@
       <div class="profile-card">
         <div class="profile-view">
           <div class="profile-avatar-wrap">
-            <img id="profile-avatar" class="profile-avatar" src="" alt="">
+            <img id="profile-avatar" class="profile-avatar" src="uploads/image_1fb379.jpg" alt="Profile Normal">
+            
+            <img class="profile-avatar avatar-hover" src="uploads/image_1fb73f.jpg" alt="Profile Hover">
+            
             <span class="profile-avatar-placeholder" id="avatar-placeholder">?</span>
           </div>
+          
           <h2 id="profile-name" class="profile-name">Your Name</h2>
           <p id="profile-tagline" class="profile-tagline">Short tagline</p>
           <p id="profile-bio" class="profile-bio">A few lines about you. Click Edit profile to change this.</p>
@@ -39,9 +43,10 @@
             <button type="button" class="btn-edit" id="btn-edit-profile" aria-label="Edit profile">Edit profile</button>
           </div>
         </div>
+
         <div class="profile-edit hidden" id="profile-edit">
           <div class="profile-avatar-wrap">
-            <img id="profile-avatar-edit" class="profile-avatar" src="" alt="">
+            <img id="profile-avatar-edit" class="profile-avatar" src="uploads/image_1fb379.jpg" alt="">
             <span class="profile-avatar-placeholder" id="avatar-placeholder-edit">?</span>
             <label class="avatar-upload" for="avatar-input">Change photo</label>
             <input type="file" id="avatar-input" accept="image/*" hidden>
