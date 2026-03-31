@@ -3,39 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | My Portfolio</title>
+  <title>Login | Errol Yu Portfolio</title>
   <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --surface: #1a1a20;
+      --text: #e8e8ed;
+      --muted: #8b8b9a;
+      --accent: #6c5ce7;
+      --accent-hover: #5b4cdb;
+    }
+
+    body.login-page {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", system-ui, sans-serif;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--surface);
+      padding: 2.5rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      /* Animation */
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .login-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .login-brand {
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-title { font-size: 2rem; margin: 0 0 0.5rem; }
+    .login-subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+
+    .input-group { text-align: left; margin-bottom: 1.5rem; }
+    .edit-label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
+
+    .edit-input {
+      width: 100%;
+      padding: 0.8rem;
+      background: #0f0f12;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: white;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .edit-input:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .login-btn:hover { background: var(--accent-hover); }
+
+    .login-message { margin-top: 1rem; font-size: 0.9rem; min-height: 1.2rem; }
+
+    .login-reset {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      text-decoration: underline;
+    }
+
+    .login-note {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+  </style>
 </head>
 <body class="login-page">
   <div class="login-wrap">
-    <div class="login-card">
-      <header>
-        <p class="login-brand">My Portfolio</p>
-        <h1 class="login-title" id="login-title">Login</h1>
-        <p class="login-subtitle" id="login-subtitle">Enter your passcode to continue.</p>
-      </header>
+    <div class="login-card" id="login-card">
+      <p class="login-brand">ERROL YU PORTFOLIO</p>
+      <h1 class="login-title">Login</h1>
+      <p class="login-subtitle">Enter your passcode to continue.</p>
 
-      <form class="login-form" id="login-form">
+      <form id="login-form">
         <div class="input-group">
-          <label class="edit-label" for="login-passcode">Passcode</label>
+          <label class="edit-label">Passcode</label>
           <input type="password" id="login-passcode" class="edit-input" placeholder="••••" required autofocus>
         </div>
-        
-        <button type="submit" class="btn-save login-btn" id="login-submit">Continue</button>
+        <button type="submit" class="login-btn">Continue</button>
       </form>
 
       <div class="login-message" id="login-message"></div>
 
-      <div class="edit-actions">
-        <button type="button" class="btn-cancel login-reset" id="login-reset">Reset passcode</button>
-      </div>
+      <button type="button" class="login-reset" id="login-reset">Reset passcode</button>
 
       <p class="login-note">
-        This is a simple client-side login (no server). It’s good for class requirements, not for real security.
+        This is a simple client-side login. Good for class requirements.
       </p>
     </div>
   </div>
 
   <script src="script.js"></script>
+  <script>
+    // Force the card to appear even if IntersectionObserver fails
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('login-card').classList.add('visible');
+    });
+  </script>
 </body>
 </html>
