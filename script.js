@@ -1,5 +1,5 @@
 (function () {
-  // 1. Dynamic Greeting Logic
+  // 1. Dynamic Greeting
   function updateGreeting() {
     const greetingEl = document.getElementById('hero-greeting');
     if (!greetingEl) return;
@@ -14,27 +14,23 @@
     greetingEl.textContent = `${message}, welcome to my portfolio.`;
   }
 
-  // 2. STATIC DATA: Gallery Items
+  // 2. STATIC DATA
   const PORTFOLIO_DATA = [
     {
       id: 'q1',
-      src: 'uploads/quiz1.jpg.jpg', // Matches your GitHub filename
+      src: 'uploads/quiz1.jpg.jpg',
       type: 'quiz',
-      label: 'Networking Quiz 1',
-      date: '2026-03-24'
+      label: 'Networking Quiz 1'
     }
   ];
 
-  // Keys & Constants
   const PASS_KEY = 'portfolio-passhash';
   const SESSION_KEY = 'portfolio-auth-session';
-  const ATTACHMENTS_V2_KEY = 'portfolio-attachments-v2';
 
   function $(id) { return document.getElementById(id); }
   function isAuthed() { return sessionStorage.getItem(SESSION_KEY) === '1'; }
   function goto(path) { window.location.href = path; }
 
-  // Auth Security
   async function sha256Hex(text) {
     try {
       if (!window.crypto || !crypto.subtle) return null;
@@ -44,110 +40,71 @@
     } catch (e) { return null; }
   }
 
-  // Animation logic
   function initSectionReveal() {
-    var sections = document.querySelectorAll('.section-reveal');
-    if (typeof IntersectionObserver !== 'undefined') {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      }, { rootMargin: '0px 0px -40px 0px', threshold: 0 });
-      sections.forEach(function (el) { if (!el.classList.contains('visible')) observer.observe(el); });
-    } else {
-      sections.forEach(function (el) { el.classList.add('visible'); });
-    }
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el));
   }
 
-  // Login Logic
   async function initLoginPage() {
     const form = $('login-form');
     if (!form) return;
-    const passInput = $('login-passcode');
-    const msg = $('login-message');
-    
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
-      const pass = (passInput.value || '').trim();
+      const pass = ($('login-passcode').value || '').trim();
       const digest = await sha256Hex(pass);
-      const candidate = digest || pass;
       const existing = localStorage.getItem(PASS_KEY);
-
-      if (!existing) {
-        localStorage.setItem(PASS_KEY, candidate);
-        sessionStorage.setItem(SESSION_KEY, '1');
-        goto('index.html');
-      } else if (existing === candidate) {
+      if (!existing || existing === (digest || pass)) {
+        if (!existing) localStorage.setItem(PASS_KEY, digest || pass);
         sessionStorage.setItem(SESSION_KEY, '1');
         goto('index.html');
       } else {
-        msg.textContent = 'Wrong passcode.';
+        $('login-message').textContent = 'Wrong passcode.';
       }
     });
     if (isAuthed()) goto('index.html');
   }
 
-  // Gallery Logic
   function initPortfolio() {
     const logoutBtn = $('btn-logout');
     if (logoutBtn) {
       logoutBtn.classList.remove('hidden');
-      logoutBtn.addEventListener('click', function () {
+      logoutBtn.addEventListener('click', () => {
         sessionStorage.removeItem(SESSION_KEY);
         goto('login.html');
       });
     }
 
     const gallery = $('gallery');
-    const statTotal = $('stat-total');
-    const statQuizzes = $('stat-quizzes');
-    const statActivities = $('stat-activities');
-
     if (!gallery) return;
 
-    function renderGallery() {
-      gallery.innerHTML = '';
-      const dynamicItems = JSON.parse(localStorage.getItem(ATTACHMENTS_V2_KEY) || '[]');
-      const allItems = [...PORTFOLIO_DATA, ...dynamicItems];
+    gallery.innerHTML = '';
+    PORTFOLIO_DATA.forEach(it => {
+      const fig = document.createElement('figure');
+      fig.className = 'gallery-item section-reveal';
+      fig.innerHTML = `
+        <img src="${it.src}" alt="${it.label}">
+        <figcaption>
+          <span class="badge ${it.type}">${it.type.toUpperCase()}</span>
+          ${it.label}
+        </figcaption>
+      `;
+      gallery.appendChild(fig);
+    });
 
-      if (!allItems.length) {
-        gallery.innerHTML = '<p class="gallery-empty">No pictures found.</p>';
-        return;
-      }
-
-      allItems.forEach(function (it) {
-        const fig = document.createElement('figure');
-        fig.className = 'gallery-item section-reveal';
-        const img = document.createElement('img');
-        img.src = it.src || it.dataUrl;
-        img.alt = it.label;
-        img.loading = "lazy";
-        const cap = document.createElement('figcaption');
-        cap.innerHTML = `<span class="badge ${it.type}">${it.type.toUpperCase()}</span> ${it.label}`;
-        fig.appendChild(img);
-        fig.appendChild(cap);
-        gallery.appendChild(fig);
-      });
-
-      if (statTotal) statTotal.textContent = allItems.length;
-      if (statQuizzes) statQuizzes.textContent = allItems.filter(i => i.type === 'quiz').length;
-      if (statActivities) statActivities.textContent = allItems.filter(i => i.type === 'activity').length;
-      initSectionReveal();
-    }
-    renderGallery();
+    $('stat-total').textContent = PORTFOLIO_DATA.length;
+    $('stat-quizzes').textContent = PORTFOLIO_DATA.filter(i => i.type === 'quiz').length;
+    $('stat-activities').textContent = PORTFOLIO_DATA.filter(i => i.type === 'activity').length;
+    initSectionReveal();
   }
 
-  // --- Start the App ---
-  initSectionReveal();
   updateGreeting();
-
   if ($('login-form')) {
     initLoginPage();
   } else {
-    if (!isAuthed()) {
-      goto('login.html');
-    } else {
-      initPortfolio();
-    }
+    isAuthed() ? initPortfolio() : goto('login.html');
   }
 })();
